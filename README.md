@@ -2,9 +2,9 @@
 
 Hello there! This is a simple MVC project that uses an API to communicate with the database. 
 
-## Upload your work :rocket: (ignore this if you know how to use git)
+## Start coding :rocket: (ignore this if you know how to use git)
 
-To upload your work, you must know github basics:
+To contribute, you must know github basics:
 
 ### Installing git and cloning the repo
 1. Install git in your pc (duh 😂) here is the link: https://git-scm.com/downloads
@@ -12,7 +12,7 @@ To upload your work, you must know github basics:
 ```bash
 git clone https://username:password@github.com/dfeliz/neptune-spear.git
 ```
-username and password are your github credentials.
+* username and password are your github credentials.
 
 And that's it! Now you have the project in your machine.
 
