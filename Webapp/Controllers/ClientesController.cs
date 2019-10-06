@@ -23,7 +23,6 @@ namespace ProyectoPracticaLP2.Controllers
             using (var httpClient = new HttpClient())
             {
                 httpClient.BaseAddress = new Uri("http://localhost:64099/api/");
-                //HTTP GET
                 var responseTask = httpClient.GetAsync("Clientes");
                 responseTask.Wait();
 
@@ -32,15 +31,11 @@ namespace ProyectoPracticaLP2.Controllers
                 {
                     var readTask = result.Content.ReadAsAsync<IList<Cliente>>();
                     readTask.Wait();
-
                     clientes = readTask.Result;
                 }
-                else //web api sent error response 
+                else
                 {
-                    //log response status here..
-
                     clientes = Enumerable.Empty<Cliente>();
-
                     ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
                 }
             }
@@ -49,17 +44,31 @@ namespace ProyectoPracticaLP2.Controllers
         }
 
         // GET: Clientes/Details/5
-        public ActionResult Details(int? id) // TODO: With api
+        public ActionResult Details(int? id)
         {
-            if (id == null)
+            Cliente cliente = null;
+
+            using (var client = new HttpClient())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                client.BaseAddress = new Uri("http://localhost:64099/api/");
+                var responseTask = client.GetAsync("Clientes/" + id.ToString());
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<Cliente>();
+                    readTask.Wait();
+
+                    cliente = readTask.Result;
+                }
             }
-            Cliente cliente = db.Clientes.Find(id);
+
             if (cliente == null)
             {
                 return HttpNotFound();
             }
+
             return View(cliente);
         }
 
@@ -70,8 +79,6 @@ namespace ProyectoPracticaLP2.Controllers
         }
 
         // POST: Clientes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,nombre,apellido,email,telefono,identificacion,direccion")] Cliente cliente)
@@ -131,16 +138,15 @@ namespace ProyectoPracticaLP2.Controllers
         }
 
         // POST: Clientes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "cli_id,cli_nombre,cli_apellido,cli_email,cli_telefono,cli_identificacion,cli_direccion")] Cliente cliente)
+        public ActionResult Edit([Bind(Include = "id,nombre,apellido,email,telefono,identificacion,direccion")] Cliente cliente)
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:64099/api/Clientes");
-                var putTask = client.PutAsJsonAsync("cliente", cliente);
+                client.BaseAddress = new Uri($"http://localhost:64099/api/clientes/{cliente.id}");
+                var putTask = client.PutAsJsonAsync(client.BaseAddress, cliente);
+
                 putTask.Wait();
 
                 var result = putTask.Result;
@@ -153,13 +159,31 @@ namespace ProyectoPracticaLP2.Controllers
         }
 
         // GET: Clientes/Delete/5
-        public ActionResult Delete(int? id) // TODO: With api
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = db.Clientes.Find(id);
+
+            Cliente cliente = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:64099/api/");
+                var responseTask = client.GetAsync("Clientes/" + id.ToString());
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<Cliente>();
+                    readTask.Wait();
+
+                    cliente = readTask.Result;
+                }
+            }
+
             if (cliente == null)
             {
                 return HttpNotFound();
@@ -172,10 +196,22 @@ namespace ProyectoPracticaLP2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id) // TODO: With api
         {
-            Cliente cliente = db.Clientes.Find(id);
-            db.Clientes.Remove(cliente);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            Cliente cliente = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri($"http://localhost:64099/api/clientes/{id}");
+                var deleteTask = client.DeleteAsync(client.BaseAddress);
+
+                deleteTask.Wait();
+
+                var result = deleteTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            return View(cliente);
         }
 
         protected override void Dispose(bool disposing)
