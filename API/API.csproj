@@ -256,7 +256,7 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Webapp\Webapp.csproj">
+    <ProjectReference Include="..\Webapp\Webapp.csproj">
       <Project>{25d3d7e9-21b4-4aa0-a5a1-7d4972650363}</Project>
       <Name>Webapp</Name>
     </ProjectReference>
