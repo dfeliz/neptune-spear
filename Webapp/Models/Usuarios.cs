@@ -12,14 +12,15 @@ namespace Webapp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Cliente
+    public partial class Usuarios
     {
         public int id { get; set; }
+        public string email { get; set; }
+        public string contrasena { get; set; }
         public string nombre { get; set; }
         public string apellido { get; set; }
-        public string email { get; set; }
-        public string telefono { get; set; }
-        public string identificacion { get; set; }
         public string direccion { get; set; }
+        public string identificacion { get; set; }
+        public string telefono { get; set; }
     }
 }

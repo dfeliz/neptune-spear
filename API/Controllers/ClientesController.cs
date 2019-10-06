@@ -17,16 +17,16 @@ namespace API.Controllers
         private ProyectoPracticaLP2Entities db = new ProyectoPracticaLP2Entities();
 
         // GET: api/Clientes
-        public IQueryable<Cliente> GetClientes()
+        public IQueryable<Clientes> GetClientes()
         {
             return db.Clientes;
         }
 
         // GET: api/Clientes/5
-        [ResponseType(typeof(Cliente))]
+        [ResponseType(typeof(Clientes))]
         public IHttpActionResult GetCliente(int id)
         {
-            Cliente cliente = db.Clientes.Find(id);
+            Clientes cliente = db.Clientes.Find(id);
             if (cliente == null)
             {
                 return NotFound();
@@ -37,7 +37,7 @@ namespace API.Controllers
 
         // PUT: api/Clientes/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCliente(int id, Cliente cliente)
+        public IHttpActionResult PutCliente(int id, Clientes cliente)
         {
             if (!ModelState.IsValid)
             {
@@ -71,8 +71,8 @@ namespace API.Controllers
         }
 
         // POST: api/Clientes
-        [ResponseType(typeof(Cliente))]
-        public IHttpActionResult PostCliente(Cliente cliente)
+        [ResponseType(typeof(Clientes))]
+        public IHttpActionResult PostCliente(Clientes cliente)
         {
             if (!ModelState.IsValid)
             {
@@ -86,10 +86,10 @@ namespace API.Controllers
         }
 
         // DELETE: api/Clientes/5
-        [ResponseType(typeof(Cliente))]
+        [ResponseType(typeof(Clientes))]
         public IHttpActionResult DeleteCliente(int id)
         {
-            Cliente cliente = db.Clientes.Find(id);
+            Clientes cliente = db.Clientes.Find(id);
             if (cliente == null)
             {
                 return NotFound();

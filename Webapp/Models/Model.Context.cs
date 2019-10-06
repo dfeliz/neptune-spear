@@ -25,9 +25,9 @@ namespace Webapp.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Almacen> Almacens { get; set; }
-        public virtual DbSet<Articulo> Articuloes { get; set; }
-        public virtual DbSet<Cliente> Clientes { get; set; }
-        public virtual DbSet<Usuario> Usuarios { get; set; }
+        public virtual DbSet<Almacenes> Almacenes { get; set; }
+        public virtual DbSet<Articulos> Articulos { get; set; }
+        public virtual DbSet<Clientes> Clientes { get; set; }
+        public virtual DbSet<Usuarios> Usuarios { get; set; }
     }
 }

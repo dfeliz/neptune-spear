@@ -18,7 +18,7 @@ namespace ProyectoPracticaLP2.Controllers
         // GET: Clientes
         public ActionResult Index()
         {
-            IEnumerable<Cliente> clientes = null;
+            IEnumerable<Clientes> clientes = null;
 
             using (var httpClient = new HttpClient())
             {
@@ -29,13 +29,13 @@ namespace ProyectoPracticaLP2.Controllers
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<IList<Cliente>>();
+                    var readTask = result.Content.ReadAsAsync<IList<Clientes>>();
                     readTask.Wait();
                     clientes = readTask.Result;
                 }
                 else
                 {
-                    clientes = Enumerable.Empty<Cliente>();
+                    clientes = Enumerable.Empty<Clientes>();
                     ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
                 }
             }
@@ -46,7 +46,7 @@ namespace ProyectoPracticaLP2.Controllers
         // GET: Clientes/Details/5
         public ActionResult Details(int? id)
         {
-            Cliente cliente = null;
+            Clientes cliente = null;
 
             using (var client = new HttpClient())
             {
@@ -57,7 +57,7 @@ namespace ProyectoPracticaLP2.Controllers
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<Cliente>();
+                    var readTask = result.Content.ReadAsAsync<Clientes>();
                     readTask.Wait();
 
                     cliente = readTask.Result;
@@ -81,7 +81,7 @@ namespace ProyectoPracticaLP2.Controllers
         // POST: Clientes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,nombre,apellido,email,telefono,identificacion,direccion")] Cliente cliente)
+        public ActionResult Create([Bind(Include = "id,nombre,apellido,email,telefono,identificacion,direccion")] Clientes cliente)
         {
             using (var httpClient = new HttpClient())
             {
@@ -111,7 +111,7 @@ namespace ProyectoPracticaLP2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Cliente cliente = null;
+            Clientes cliente = null;
 
             using (var client = new HttpClient())
             {
@@ -122,7 +122,7 @@ namespace ProyectoPracticaLP2.Controllers
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<Cliente>();
+                    var readTask = result.Content.ReadAsAsync<Clientes>();
                     readTask.Wait();
 
                     cliente = readTask.Result;
@@ -140,7 +140,7 @@ namespace ProyectoPracticaLP2.Controllers
         // POST: Clientes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,nombre,apellido,email,telefono,identificacion,direccion")] Cliente cliente)
+        public ActionResult Edit([Bind(Include = "id,nombre,apellido,email,telefono,identificacion,direccion")] Clientes cliente)
         {
             using (var client = new HttpClient())
             {
@@ -166,7 +166,7 @@ namespace ProyectoPracticaLP2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Cliente cliente = null;
+            Clientes cliente = null;
 
             using (var client = new HttpClient())
             {
@@ -177,7 +177,7 @@ namespace ProyectoPracticaLP2.Controllers
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<Cliente>();
+                    var readTask = result.Content.ReadAsAsync<Clientes>();
                     readTask.Wait();
 
                     cliente = readTask.Result;
@@ -196,7 +196,7 @@ namespace ProyectoPracticaLP2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id) // TODO: With api
         {
-            Cliente cliente = null;
+            Clientes cliente = null;
 
             using (var client = new HttpClient())
             {

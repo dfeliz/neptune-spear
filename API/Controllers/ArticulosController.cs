@@ -17,39 +17,39 @@ namespace API.Controllers
         private ProyectoPracticaLP2Entities db = new ProyectoPracticaLP2Entities();
 
         // GET: api/Articulos
-        public IQueryable<Articulo> GetArticulo()
+        public IQueryable<Articulos> GetArticulos()
         {
-            return db.Articulo;
+            return db.Articulos;
         }
 
         // GET: api/Articulos/5
-        [ResponseType(typeof(Articulo))]
-        public IHttpActionResult GetArticulo(int id)
+        [ResponseType(typeof(Articulos))]
+        public IHttpActionResult GetArticulos(int id)
         {
-            Articulo articulo = db.Articulo.Find(id);
-            if (articulo == null)
+            Articulos articulos = db.Articulos.Find(id);
+            if (articulos == null)
             {
                 return NotFound();
             }
 
-            return Ok(articulo);
+            return Ok(articulos);
         }
 
         // PUT: api/Articulos/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutArticulo(int id, Articulo articulo)
+        public IHttpActionResult PutArticulos(int id, Articulos articulos)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != articulo.id)
+            if (id != articulos.id)
             {
                 return BadRequest();
             }
 
-            db.Entry(articulo).State = EntityState.Modified;
+            db.Entry(articulos).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ArticuloExists(id))
+                if (!ArticulosExists(id))
                 {
                     return NotFound();
                 }
@@ -71,34 +71,34 @@ namespace API.Controllers
         }
 
         // POST: api/Articulos
-        [ResponseType(typeof(Articulo))]
-        public IHttpActionResult PostArticulo(Articulo articulo)
+        [ResponseType(typeof(Articulos))]
+        public IHttpActionResult PostArticulos(Articulos articulos)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Articulo.Add(articulo);
+            db.Articulos.Add(articulos);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = articulo.id }, articulo);
+            return CreatedAtRoute("DefaultApi", new { id = articulos.id }, articulos);
         }
 
         // DELETE: api/Articulos/5
-        [ResponseType(typeof(Articulo))]
-        public IHttpActionResult DeleteArticulo(int id)
+        [ResponseType(typeof(Articulos))]
+        public IHttpActionResult DeleteArticulos(int id)
         {
-            Articulo articulo = db.Articulo.Find(id);
-            if (articulo == null)
+            Articulos articulos = db.Articulos.Find(id);
+            if (articulos == null)
             {
                 return NotFound();
             }
 
-            db.Articulo.Remove(articulo);
+            db.Articulos.Remove(articulos);
             db.SaveChanges();
 
-            return Ok(articulo);
+            return Ok(articulos);
         }
 
         protected override void Dispose(bool disposing)
@@ -110,9 +110,9 @@ namespace API.Controllers
             base.Dispose(disposing);
         }
 
-        private bool ArticuloExists(int id)
+        private bool ArticulosExists(int id)
         {
-            return db.Articulo.Count(e => e.id == id) > 0;
+            return db.Articulos.Count(e => e.id == id) > 0;
         }
     }
 }

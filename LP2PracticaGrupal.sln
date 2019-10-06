@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.757
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{3B18D42B-E31B-4167-B71D-091F7E3CBD8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webapp", "Webapp\Webapp.csproj", "{25D3D7E9-21B4-4AA0-A5A1-7D4972650363}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "Webapp\WebApp.csproj", "{25D3D7E9-21B4-4AA0-A5A1-7D4972650363}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
