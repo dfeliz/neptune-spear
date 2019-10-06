@@ -44,6 +44,6 @@ git push --set-upstream origin "my-name"
 * "What did you do" is the commit message. Replace that with... eh... what did you do lol.
 * "my-name" is your branch's name. Remember git checkout -b "my-name"? Well, that name.
 
-And that's all! Now all you have to do is come to this page AGAIN and you will see at the top "You commited blabla changes" and a green button. Click that green button, and then scroll down and press the another green button.
+And that's all! Now all you have to do is come to this page AGAIN and you will see at the top a yellow container that says "You commited blabla changes" and a green button that says "Compare & create pull request". Click that green button, and then scroll down and press the another green button that says "Create pull request"
 
 That's it! Now you know how to use git. Well, a 1% at least.
