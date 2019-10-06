@@ -4,8 +4,8 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ProyectoPracticaLP2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Almacen">
+      <Schema Namespace="ProyectoPracticaLP2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Almacens">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -13,7 +13,7 @@
           <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="direccion" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <EntityType Name="Articulo">
+        <EntityType Name="Articuloes">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -22,7 +22,7 @@
           <Property Name="descripcion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="almacen_id" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Cliente">
+        <EntityType Name="Clientes">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -34,7 +34,7 @@
           <Property Name="identificacion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="direccion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="Usuario">
+        <EntityType Name="Usuarios">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -48,25 +48,25 @@
           <Property Name="telefono" Type="varchar" MaxLength="14" Nullable="false" />
         </EntityType>
         <Association Name="FK_Articulo_Almacen">
-          <End Role="Almacen" Type="Self.Almacen" Multiplicity="1" />
-          <End Role="Articulo" Type="Self.Articulo" Multiplicity="*" />
+          <End Role="Almacens" Type="Self.Almacens" Multiplicity="1" />
+          <End Role="Articuloes" Type="Self.Articuloes" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Almacen">
+            <Principal Role="Almacens">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Articulo">
+            <Dependent Role="Articuloes">
               <PropertyRef Name="almacen_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ProyectoPracticaLP2ModelStoreContainer">
-          <EntitySet Name="Almacen" EntityType="Self.Almacen" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Articulo" EntityType="Self.Articulo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Almacens" EntityType="Self.Almacens" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Articuloes" EntityType="Self.Articuloes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Articulo_Almacen" Association="Self.FK_Articulo_Almacen">
-            <End Role="Almacen" EntitySet="Almacen" />
-            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="Almacens" EntitySet="Almacens" />
+            <End Role="Articuloes" EntitySet="Articuloes" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -81,7 +81,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Articuloes" Relationship="Self.FK_Articulo_Almacen" FromRole="Almacen" ToRole="Articulo" />
+          <NavigationProperty Name="Articuloes" Relationship="Self.FK_Articulo_Almacen" FromRole="Almacens" ToRole="Articuloes" />
         </EntityType>
         <EntityType Name="Articulo">
           <Key>
@@ -90,8 +90,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="almacen_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Almacen" Relationship="Self.FK_Articulo_Almacen" FromRole="Articulo" ToRole="Almacen" />
+          <NavigationProperty Name="Almacen" Relationship="Self.FK_Articulo_Almacen" FromRole="Articuloes" ToRole="Almacens" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
@@ -119,16 +118,8 @@
           <Property Name="telefono" Type="String" MaxLength="14" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <Association Name="FK_Articulo_Almacen">
-          <End Role="Almacen" Type="Self.Almacen" Multiplicity="1" />
-          <End Role="Articulo" Type="Self.Articulo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Almacen">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Articulo">
-              <PropertyRef Name="almacen_id" />
-            </Dependent>
-          </ReferentialConstraint>
+          <End Role="Almacens" Type="Self.Almacen" Multiplicity="1" />
+          <End Role="Articuloes" Type="Self.Articulo" Multiplicity="*" />
         </Association>
         <EntityContainer Name="ProyectoPracticaLP2Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Almacens" EntityType="Self.Almacen" />
@@ -136,8 +127,8 @@
           <EntitySet Name="Clientes" EntityType="Self.Cliente" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
           <AssociationSet Name="FK_Articulo_Almacen" Association="Self.FK_Articulo_Almacen">
-            <End Role="Almacen" EntitySet="Almacens" />
-            <End Role="Articulo" EntitySet="Articuloes" />
+            <End Role="Almacens" EntitySet="Almacens" />
+            <End Role="Articuloes" EntitySet="Articuloes" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -148,7 +139,7 @@
         <EntityContainerMapping StorageEntityContainer="ProyectoPracticaLP2ModelStoreContainer" CdmEntityContainer="ProyectoPracticaLP2Entities">
           <EntitySetMapping Name="Almacens">
             <EntityTypeMapping TypeName="ProyectoPracticaLP2Model.Almacen">
-              <MappingFragment StoreEntitySet="Almacen">
+              <MappingFragment StoreEntitySet="Almacens">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="direccion" ColumnName="direccion" />
@@ -157,17 +148,16 @@
           </EntitySetMapping>
           <EntitySetMapping Name="Articuloes">
             <EntityTypeMapping TypeName="ProyectoPracticaLP2Model.Articulo">
-              <MappingFragment StoreEntitySet="Articulo">
+              <MappingFragment StoreEntitySet="Articuloes">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="almacen_id" ColumnName="almacen_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Clientes">
             <EntityTypeMapping TypeName="ProyectoPracticaLP2Model.Cliente">
-              <MappingFragment StoreEntitySet="Cliente">
+              <MappingFragment StoreEntitySet="Clientes">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="apellido" ColumnName="apellido" />
@@ -180,7 +170,7 @@
           </EntitySetMapping>
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="ProyectoPracticaLP2Model.Usuario">
-              <MappingFragment StoreEntitySet="Usuario">
+              <MappingFragment StoreEntitySet="Usuarios">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="contrasena" ColumnName="contrasena" />
@@ -192,6 +182,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="FK_Articulo_Almacen" TypeName="ProyectoPracticaLP2Model.FK_Articulo_Almacen" StoreEntitySet="Articuloes">
+            <EndProperty Name="Almacens">
+              <ScalarProperty Name="id" ColumnName="almacen_id" />
+            </EndProperty>
+            <EndProperty Name="Articuloes">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -207,8 +205,8 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

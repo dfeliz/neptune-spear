@@ -1,5 +1,12 @@
 ﻿@model Webapp.Models.Articulo
 
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
 <div>
     <h4>Articulo</h4>
     <hr />
@@ -18,14 +25,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.descripcion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Almacen.nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Almacen.nombre)
         </dd>
 
     </dl>

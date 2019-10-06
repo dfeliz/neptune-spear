@@ -1,5 +1,12 @@
 ﻿@model IEnumerable<Webapp.Models.Articulo>
 
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -11,9 +18,6 @@
         <th>
             @Html.DisplayNameFor(model => model.descripcion)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Almacen.nombre)
-        </th>
         <th></th>
     </tr>
 
@@ -24,9 +28,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.descripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Almacen.nombre)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.id }) |

@@ -17,16 +17,16 @@ namespace API.Controllers
         private ProyectoPracticaLP2Entities db = new ProyectoPracticaLP2Entities();
 
         // GET: api/Articulos
-        public IQueryable<Articulo> GetArticulo()
+        public IQueryable<Articulo> GetArticuloes()
         {
-            return db.Articulo;
+            return db.Articuloes;
         }
 
         // GET: api/Articulos/5
         [ResponseType(typeof(Articulo))]
         public IHttpActionResult GetArticulo(int id)
         {
-            Articulo articulo = db.Articulo.Find(id);
+            Articulo articulo = db.Articuloes.Find(id);
             if (articulo == null)
             {
                 return NotFound();
@@ -79,7 +79,7 @@ namespace API.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Articulo.Add(articulo);
+            db.Articuloes.Add(articulo);
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = articulo.id }, articulo);
@@ -89,13 +89,13 @@ namespace API.Controllers
         [ResponseType(typeof(Articulo))]
         public IHttpActionResult DeleteArticulo(int id)
         {
-            Articulo articulo = db.Articulo.Find(id);
+            Articulo articulo = db.Articuloes.Find(id);
             if (articulo == null)
             {
                 return NotFound();
             }
 
-            db.Articulo.Remove(articulo);
+            db.Articuloes.Remove(articulo);
             db.SaveChanges();
 
             return Ok(articulo);
@@ -112,7 +112,7 @@ namespace API.Controllers
 
         private bool ArticuloExists(int id)
         {
-            return db.Articulo.Count(e => e.id == id) > 0;
+            return db.Articuloes.Count(e => e.id == id) > 0;
         }
     }
 }
