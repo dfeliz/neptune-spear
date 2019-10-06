@@ -18,7 +18,7 @@ And that's it! Now you have the project in your machine.
 
 ### Start coding
 
-To start coding, first you MUST create a branch. I won't explain what a branch is, I didn't get enough time. Google it, for the sake of your knowledge.
+To start coding, first **you MUST create a branch.** I won't explain what a branch is, I didn't get enough time. Google it, for the sake of your knowledge.
 
 1. Go to your project folder.
 2. Right click on an empty space and you'll see something like "Open git bash here". Click it.
@@ -44,6 +44,6 @@ git push --set-upstream origin "my-name"
 * "What did you do" is the commit message. Replace that with... eh... what did you do lol.
 * "my-name" is your branch's name. Remember git checkout -b "my-name"? Well, that name.
 
-And that's all! Now all you have to do is come to this page AGAIN and you will see at the top a yellow container that says "You commited blabla changes" and a green button that says "Compare & create pull request". Click that green button, and then scroll down and press the another green button that says "Create pull request"
+And that's all! Now all you have to do is come to this page **AGAIN** and you will see at the top a yellow container that says "You commited blabla changes" and a green button that says **"Compare & create pull request"**. Click that green button, then scroll down and press the another green button that says **"Create pull request"**.
 
-That's it! Now you know how to use git. Well, a 1% at least.
+**That's it!** Now you know how to use git. Well, a 1% at least.
