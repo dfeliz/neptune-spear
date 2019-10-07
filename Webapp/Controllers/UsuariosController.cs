@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Webapp.Models;
+using System.Net.Http;
 
 namespace Webapp.Controllers
 {
@@ -17,21 +18,57 @@ namespace Webapp.Controllers
         // GET: Usuarios
         public ActionResult Index()
         {
-            return View(db.Usuarios.ToList());
+            IEnumerable<Usuarios> usuarios = null;
+
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri("http://localhost:64099/api/");
+                var responseTask = httpClient.GetAsync("Usuarios");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<Usuarios>>();
+                    readTask.Wait();
+                    usuarios = readTask.Result;
+                }
+                else
+                {
+                    usuarios = Enumerable.Empty<Usuarios>();
+                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                }
+            }
+
+            return View(usuarios);
         }
 
         // GET: Usuarios/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            Usuarios usuarios = null;
+
+            using (var client = new HttpClient())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                client.BaseAddress = new Uri("http://localhost:64099/api/");
+                var responseTask = client.GetAsync("Usuarios/" + id.ToString());
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<Usuarios>();
+                    readTask.Wait();
+
+                    usuarios = readTask.Result;
+                }
             }
-            Usuarios usuarios = db.Usuarios.Find(id);
+
             if (usuarios == null)
             {
                 return HttpNotFound();
             }
+
             return View(usuarios);
         }
 
@@ -48,12 +85,22 @@ namespace Webapp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,email,contrasena,nombre,apellido,direccion,identificacion,telefono")] Usuarios usuarios)
         {
-            if (ModelState.IsValid)
+            using (var httpClient = new HttpClient())
             {
-                db.Usuarios.Add(usuarios);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                httpClient.BaseAddress = new Uri("http://localhost:64099/api/Usuarios/");
+
+                //HTTP POST
+                var postTask = httpClient.PostAsJsonAsync("usuarios", usuarios);
+                postTask.Wait();
+
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
             }
+
+            ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
 
             return View(usuarios);
         }
@@ -65,11 +112,30 @@ namespace Webapp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Usuarios usuarios = db.Usuarios.Find(id);
+
+            Usuarios usuarios = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:64099/api/");
+                var responseTask = client.GetAsync("Usuarios/" + id.ToString());
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<Usuarios>();
+                    readTask.Wait();
+
+                    usuarios = readTask.Result;
+                }
+            }
+
             if (usuarios == null)
             {
                 return HttpNotFound();
             }
+
             return View(usuarios);
         }
 
@@ -80,11 +146,18 @@ namespace Webapp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,email,contrasena,nombre,apellido,direccion,identificacion,telefono")] Usuarios usuarios)
         {
-            if (ModelState.IsValid)
+            using (var client = new HttpClient())
             {
-                db.Entry(usuarios).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                client.BaseAddress = new Uri($"http://localhost:64099/api/usuarios/{usuarios.id}");
+                var putTask = client.PutAsJsonAsync(client.BaseAddress, usuarios);
+
+                putTask.Wait();
+
+                var result = putTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
             }
             return View(usuarios);
         }
@@ -96,7 +169,25 @@ namespace Webapp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Usuarios usuarios = db.Usuarios.Find(id);
+
+            Usuarios usuarios = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:64099/api/");
+                var responseTask = client.GetAsync("Usuarios/" + id.ToString());
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<Usuarios>();
+                    readTask.Wait();
+
+                    usuarios = readTask.Result;
+                }
+            }
+
             if (usuarios == null)
             {
                 return HttpNotFound();
@@ -109,10 +200,22 @@ namespace Webapp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Usuarios usuarios = db.Usuarios.Find(id);
-            db.Usuarios.Remove(usuarios);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            Usuarios usuarios = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri($"http://localhost:64099/api/usuarios/{id}");
+                var deleteTask = client.DeleteAsync(client.BaseAddress);
+
+                deleteTask.Wait();
+
+                var result = deleteTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            return View(usuarios);
         }
 
         protected override void Dispose(bool disposing)

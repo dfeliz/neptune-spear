@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Webapp.Models;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Webapp.Controllers
 {
@@ -15,23 +17,28 @@ namespace Webapp.Controllers
         private ProyectoPracticaLP2Entities db = new ProyectoPracticaLP2Entities();
 
         // GET: Almacenes
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View(db.Almacenes.ToList());
-        }
+            IEnumerable<Almacenes> almacenes = null;
 
-        // GET: Almacenes/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
+            using (var client = new HttpClient())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                client.BaseAddress = new Uri("http://localhost:64099/api/");
+
+                HttpResponseMessage response = await client.GetAsync("Almacenes");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsAsync<IList<Almacenes>>();
+                    almacenes = result;
+                }
+                else
+                {
+                    almacenes = Enumerable.Empty<Almacenes>();
+                    ModelState.AddModelError(string.Empty, "Oops, looks like something went wrong.");
+                }
             }
-            Almacenes almacenes = db.Almacenes.Find(id);
-            if (almacenes == null)
-            {
-                return HttpNotFound();
-            }
+
             return View(almacenes);
         }
 
@@ -42,77 +49,126 @@ namespace Webapp.Controllers
         }
 
         // POST: Almacenes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,nombre,direccion")] Almacenes almacenes)
+        public async Task<ActionResult> Create(Almacenes almacen)
         {
-            if (ModelState.IsValid)
+            using (var client = new HttpClient())
             {
-                db.Almacenes.Add(almacenes);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                client.BaseAddress = new Uri("http://localhost:64099/api/Articulos/");
+
+                HttpResponseMessage response = await client.PostAsJsonAsync("almacenes", almacen);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
             }
 
-            return View(almacenes);
+            ModelState.AddModelError(string.Empty, "Oops, looks like something went wrong.");
+
+            return View(almacen);
         }
 
-        // GET: Almacenes/Edit/5
-        public ActionResult Edit(int? id)
+        // GET: Almacenes/Edit/id
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Almacenes almacenes = db.Almacenes.Find(id);
-            if (almacenes == null)
+
+            Almacenes almacen = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:64099/api/");
+
+                HttpResponseMessage response = await client.GetAsync("Almacenes/" + id.ToString());
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsAsync<Almacenes>();
+                    almacen = result;
+                }
+            }
+
+            if (almacen == null)
             {
                 return HttpNotFound();
             }
-            return View(almacenes);
+
+            return View(almacen);
         }
 
-        // POST: Almacenes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Almacenes/Edit/id
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,nombre,direccion")] Almacenes almacenes)
+        public async Task<ActionResult> Edit(Almacenes almacen)
         {
-            if (ModelState.IsValid)
+            using (var client = new HttpClient())
             {
-                db.Entry(almacenes).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                client.BaseAddress = new Uri($"http://localhost:64099/api/articulos/{almacen.id}");
+
+                HttpResponseMessage response = await client.PutAsJsonAsync(client.BaseAddress, almacen);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
             }
-            return View(almacenes);
+            return View(almacen);
         }
 
         // GET: Almacenes/Delete/5
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Almacenes almacenes = db.Almacenes.Find(id);
-            if (almacenes == null)
+
+            Almacenes almacen = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri($"http://localhost:64099/api/almacenes/{id}");
+
+                HttpResponseMessage response = await client.GetAsync(client.BaseAddress);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsAsync<Almacenes>();
+                    almacen = result;
+                }
+            }
+
+            if (almacen == null)
             {
                 return HttpNotFound();
             }
-            return View(almacenes);
+            return View(almacen);
         }
 
         // POST: Almacenes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Almacenes almacenes = db.Almacenes.Find(id);
-            db.Almacenes.Remove(almacenes);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            Almacenes almacen = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri($"http://localhost:64099/api/almacenes/{id}");
+
+                HttpResponseMessage response = await client.DeleteAsync(client.BaseAddress);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            return View(almacen);
         }
 
         protected override void Dispose(bool disposing)
