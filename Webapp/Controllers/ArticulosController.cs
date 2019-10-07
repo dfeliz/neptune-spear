@@ -14,24 +14,20 @@ namespace ProyectoPracticaLP2.Controllers
         private ProyectoPracticaLP2Entities db = new ProyectoPracticaLP2Entities();
 
         // GET: Articulos
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             IEnumerable<Articulos> articulos = null;
 
-            using (var httpClient = new HttpClient())
+            using (var client = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri("http://localhost:64099/api/");
+                client.BaseAddress = new Uri("http://localhost:64099/api/");
 
-                var httpResponse = httpClient.GetAsync("Articulos");
-                httpResponse.Wait();
+                HttpResponseMessage response = await client.GetAsync("Articulos");
 
-                var result = httpResponse.Result;
-
-                if (result.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
-                    var httpRead = result.Content.ReadAsAsync<IList<Articulos>>();
-                    httpRead.Wait();
-                    articulos = httpRead.Result;
+                    var result = await response.Content.ReadAsAsync<IList<Articulos>>();
+                    articulos = result;
                 }
                 else
                 {
@@ -44,7 +40,7 @@ namespace ProyectoPracticaLP2.Controllers
         }
 
         // GET: Articulos/Details/id
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
             Articulos articulo = null;
 
@@ -52,17 +48,12 @@ namespace ProyectoPracticaLP2.Controllers
             {
                 client.BaseAddress = new Uri("http://localhost:64099/api/");
 
-                var httpResponse = client.GetAsync("Articulos/" + id.ToString());
-                httpResponse.Wait();
+                HttpResponseMessage response = await client.GetAsync("Articulos/" + id.ToString());
 
-                var result = httpResponse.Result;
-
-                if (result.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
-                    var httpRead = result.Content.ReadAsAsync<Articulos>();
-                    httpRead.Wait();
-
-                    articulo = httpRead.Result;
+                    var result = await response.Content.ReadAsAsync<Articulos>();
+                    articulo = result;
                 }
             }
 
@@ -83,23 +74,19 @@ namespace ProyectoPracticaLP2.Controllers
         // POST: Articulos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Articulos articulo)
+        public async Task<ActionResult> Create(Articulos articulo)
         {
-            using (var httpClient = new HttpClient())
+            using (var client = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri("http://localhost:64099/api/Articulos/");
+                client.BaseAddress = new Uri("http://localhost:64099/api/Articulos/");
 
-                var httpPost = httpClient.PostAsJsonAsync("articulo", articulo);
-                httpPost.Wait();
+                HttpResponseMessage response = await client.PostAsJsonAsync("articulo", articulo);
 
-                var result = httpPost.Result;
-
-                if (result.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");
                 }
             }
-
 
             ModelState.AddModelError(string.Empty, "Oops, looks like something went wrong.");
 
@@ -107,7 +94,7 @@ namespace ProyectoPracticaLP2.Controllers
         }
 
         // GET: Articulos/Edit/id
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -116,21 +103,16 @@ namespace ProyectoPracticaLP2.Controllers
 
             Articulos articulo = null;
 
-            using (var httpClient = new HttpClient())
+            using (var client = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri("http://localhost:64099/api/");
+                client.BaseAddress = new Uri("http://localhost:64099/api/");
 
-                var httpResponse = httpClient.GetAsync("Articulos/" + id.ToString());
-                httpResponse.Wait();
+                HttpResponseMessage response = await client.GetAsync("Articulos/" + id.ToString());
 
-                var result = httpResponse.Result;
-
-                if (result.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<Articulos>();
-                    readTask.Wait();
-
-                    articulo = readTask.Result;
+                    var result = await response.Content.ReadAsAsync<Articulos>();
+                    articulo = result;
                 }
             }
 
@@ -145,18 +127,15 @@ namespace ProyectoPracticaLP2.Controllers
         // POST: Articulos/Edit/id
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Articulos articulo)
+        public async Task<ActionResult> Edit(Articulos articulo)
         {
-            using (var httpClient = new HttpClient())
+            using (var client = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri($"http://localhost:64099/api/articulos/{articulo.id}");
+                client.BaseAddress = new Uri($"http://localhost:64099/api/articulos/{articulo.id}");
 
-                var httpPut = httpClient.PutAsJsonAsync(httpClient.BaseAddress, articulo);
-                httpPut.Wait();
+                HttpResponseMessage response = await client.PutAsJsonAsync(client.BaseAddress, articulo);
 
-                var result = httpPut.Result;
-
-                if (result.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");
                 }
@@ -165,7 +144,7 @@ namespace ProyectoPracticaLP2.Controllers
         }
 
         // GET: Articulos/Delete/id
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -174,19 +153,16 @@ namespace ProyectoPracticaLP2.Controllers
 
             Articulos articulo = null;
 
-            using (var httpClient = new HttpClient())
+            using (var client = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri("http://localhost:64099/api/");
-                var httpResponse = httpClient.GetAsync("Articulos/" + id.ToString());
-                httpResponse.Wait();
+                client.BaseAddress = new Uri("http://localhost:64099/api/articulos/{id}");
 
-                var result = httpResponse.Result;
-                if (result.IsSuccessStatusCode)
+                HttpResponseMessage response = await client.GetAsync(client.BaseAddress);
+
+                if (response.IsSuccessStatusCode)
                 {
-                    var httpRead = result.Content.ReadAsAsync<Articulos>();
-                    httpRead.Wait();
-
-                    articulo = httpRead.Result;
+                    var result = await response.Content.ReadAsAsync<Articulos>();
+                    articulo = result;
                 }
             }
 
@@ -200,20 +176,17 @@ namespace ProyectoPracticaLP2.Controllers
         // POST: Articulos/Delete/id
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Articulos articulo = null;
 
-            using (var httpClient = new HttpClient())
+            using (var client = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri($"http://localhost:64099/api/articulos/{id}");
+                client.BaseAddress = new Uri($"http://localhost:64099/api/articulos/{id}");
 
-                var httpDelete = httpClient.DeleteAsync(httpClient.BaseAddress);
-                httpDelete.Wait();
+                HttpResponseMessage response = await client.DeleteAsync(client.BaseAddress);
 
-                var result = httpDelete.Result;
-
-                if (result.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");
                 }
