@@ -155,7 +155,7 @@ namespace ProyectoPracticaLP2.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:64099/api/articulos/{id}");
+                client.BaseAddress = new Uri($"http://localhost:64099/api/articulos/{id}");
 
                 HttpResponseMessage response = await client.GetAsync(client.BaseAddress);
 

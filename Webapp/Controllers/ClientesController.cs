@@ -46,7 +46,7 @@ namespace ProyectoPracticaLP2.Controllers
         // GET: Clientes/Details/5
         public ActionResult Details(int? id)
         {
-            Clientes cliente = null;
+            Clientes Clientes = null;
 
             using (var client = new HttpClient())
             {
@@ -60,16 +60,16 @@ namespace ProyectoPracticaLP2.Controllers
                     var readTask = result.Content.ReadAsAsync<Clientes>();
                     readTask.Wait();
 
-                    cliente = readTask.Result;
+                    Clientes = readTask.Result;
                 }
             }
 
-            if (cliente == null)
+            if (Clientes == null)
             {
                 return HttpNotFound();
             }
 
-            return View(cliente);
+            return View(Clientes);
         }
 
         // GET: Clientes/Create
@@ -81,14 +81,14 @@ namespace ProyectoPracticaLP2.Controllers
         // POST: Clientes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,nombre,apellido,email,telefono,identificacion,direccion")] Clientes cliente)
+        public ActionResult Create([Bind(Include = "id,nombre,apellido,email,telefono,identificacion,direccion")] Clientes Clientes)
         {
             using (var httpClient = new HttpClient())
             {
                 httpClient.BaseAddress = new Uri("http://localhost:64099/api/Clientes/");
 
                 //HTTP POST
-                var postTask = httpClient.PostAsJsonAsync("cliente", cliente);
+                var postTask = httpClient.PostAsJsonAsync("Clientes", Clientes);
                 postTask.Wait();
 
                 var result = postTask.Result;
@@ -100,7 +100,7 @@ namespace ProyectoPracticaLP2.Controllers
 
             ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
 
-            return View(cliente);
+            return View(Clientes);
         }
 
         // GET: Clientes/Edit/5
@@ -111,7 +111,7 @@ namespace ProyectoPracticaLP2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Clientes cliente = null;
+            Clientes Clientes = null;
 
             using (var client = new HttpClient())
             {
@@ -125,27 +125,27 @@ namespace ProyectoPracticaLP2.Controllers
                     var readTask = result.Content.ReadAsAsync<Clientes>();
                     readTask.Wait();
 
-                    cliente = readTask.Result;
+                    Clientes = readTask.Result;
                 }
             }
 
-            if (cliente == null)
+            if (Clientes == null)
             {
                 return HttpNotFound();
             }
 
-            return View(cliente);
+            return View(Clientes);
         }
 
         // POST: Clientes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,nombre,apellido,email,telefono,identificacion,direccion")] Clientes cliente)
+        public ActionResult Edit([Bind(Include = "id,nombre,apellido,email,telefono,identificacion,direccion")] Clientes Clientes)
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri($"http://localhost:64099/api/clientes/{cliente.id}");
-                var putTask = client.PutAsJsonAsync(client.BaseAddress, cliente);
+                client.BaseAddress = new Uri($"http://localhost:64099/api/clientes/{Clientes.id}");
+                var putTask = client.PutAsJsonAsync(client.BaseAddress, Clientes);
 
                 putTask.Wait();
 
@@ -155,7 +155,7 @@ namespace ProyectoPracticaLP2.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            return View(cliente);
+            return View(Clientes);
         }
 
         // GET: Clientes/Delete/5
@@ -166,7 +166,7 @@ namespace ProyectoPracticaLP2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Clientes cliente = null;
+            Clientes Clientes = null;
 
             using (var client = new HttpClient())
             {
@@ -180,15 +180,15 @@ namespace ProyectoPracticaLP2.Controllers
                     var readTask = result.Content.ReadAsAsync<Clientes>();
                     readTask.Wait();
 
-                    cliente = readTask.Result;
+                    Clientes = readTask.Result;
                 }
             }
 
-            if (cliente == null)
+            if (Clientes == null)
             {
                 return HttpNotFound();
             }
-            return View(cliente);
+            return View(Clientes);
         }
 
         // POST: Clientes/Delete/5
@@ -196,7 +196,7 @@ namespace ProyectoPracticaLP2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id) // TODO: With api
         {
-            Clientes cliente = null;
+            Clientes Clientes = null;
 
             using (var client = new HttpClient())
             {
@@ -211,7 +211,7 @@ namespace ProyectoPracticaLP2.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            return View(cliente);
+            return View(Clientes);
         }
 
         protected override void Dispose(bool disposing)
