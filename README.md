@@ -20,10 +20,9 @@ And that's it! Now you have the project in your machine.
 
 To start coding, first **you MUST create a branch.** I won't explain what a branch is, I didn't get enough time. Google it, for the sake of your knowledge.
 
-1. Go to your project folder.
-2. Right click on an empty space and you'll see something like "Open git bash here". Click it.
-3. Run the following:
+1. Run the following:
   ```bash
+  cd neptune-spear
   git checkout -b "my-name"
   ``` 
 * Replace "my-name" with your name.
