@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Webapp.Models;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace ProyectoPracticaLP2.Controllers
 {
@@ -82,11 +83,11 @@ namespace ProyectoPracticaLP2.Controllers
         // POST: Articulos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,nombre,descripcion")] Articulos articulo)
+        public ActionResult Create(Articulos articulo)
         {
             using (var httpClient = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri("http://localhost:64099/api/Clientes/");
+                httpClient.BaseAddress = new Uri("http://localhost:64099/api/Articulos/");
 
                 var httpPost = httpClient.PostAsJsonAsync("articulo", articulo);
                 httpPost.Wait();
@@ -98,6 +99,7 @@ namespace ProyectoPracticaLP2.Controllers
                     return RedirectToAction("Index");
                 }
             }
+
 
             ModelState.AddModelError(string.Empty, "Oops, looks like something went wrong.");
 
@@ -143,7 +145,7 @@ namespace ProyectoPracticaLP2.Controllers
         // POST: Articulos/Edit/id
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,nombre,descripcion")] Articulos articulo)
+        public ActionResult Edit(Articulos articulo)
         {
             using (var httpClient = new HttpClient())
             {

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Webapp.Models.Articulos>
+﻿@model IEnumerable<Webapp.Models.Almacenes>
 
 @{
     ViewBag.Title = "Index";
@@ -16,7 +16,7 @@
             @Html.DisplayNameFor(model => model.nombre)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.descripcion)
+            @Html.DisplayNameFor(model => model.direccion)
         </th>
         <th></th>
     </tr>
@@ -27,7 +27,7 @@
             @Html.DisplayFor(modelItem => item.nombre)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.descripcion)
+            @Html.DisplayFor(modelItem => item.direccion)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.id }) |

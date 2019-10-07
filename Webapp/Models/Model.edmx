@@ -20,7 +20,6 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="descripcion" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="almacen_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Clientes">
           <Key>
@@ -47,27 +46,11 @@
           <Property Name="identificacion" Type="varchar" MaxLength="14" Nullable="false" />
           <Property Name="telefono" Type="varchar" MaxLength="14" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Articulo_Almacen">
-          <End Role="Almacenes" Type="Self.Almacenes" Multiplicity="1" />
-          <End Role="Articulos" Type="Self.Articulos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Almacenes">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Articulos">
-              <PropertyRef Name="almacen_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="ProyectoPracticaLP2ModelStoreContainer">
           <EntitySet Name="Almacenes" EntityType="Self.Almacenes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Articulos" EntityType="Self.Articulos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Articulo_Almacen" Association="Self.FK_Articulo_Almacen">
-            <End Role="Almacenes" EntitySet="Almacenes" />
-            <End Role="Articulos" EntitySet="Articulos" />
-          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -81,7 +64,6 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Articulos" Relationship="Self.FK_Articulo_Almacen" FromRole="Almacenes" ToRole="Articulos" />
         </EntityType>
         <EntityType Name="Articulos">
           <Key>
@@ -90,8 +72,6 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="almacen_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Almacenes" Relationship="Self.FK_Articulo_Almacen" FromRole="Articulos" ToRole="Almacenes" />
         </EntityType>
         <EntityType Name="Clientes">
           <Key>
@@ -118,27 +98,11 @@
           <Property Name="identificacion" Type="String" MaxLength="14" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="telefono" Type="String" MaxLength="14" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Articulo_Almacen">
-          <End Role="Almacenes" Type="Self.Almacenes" Multiplicity="1" />
-          <End Role="Articulos" Type="Self.Articulos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Almacenes">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Articulos">
-              <PropertyRef Name="almacen_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="ProyectoPracticaLP2Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Almacenes" EntityType="Self.Almacenes" />
           <EntitySet Name="Articulos" EntityType="Self.Articulos" />
           <EntitySet Name="Clientes" EntityType="Self.Clientes" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
-          <AssociationSet Name="FK_Articulo_Almacen" Association="Self.FK_Articulo_Almacen">
-            <End Role="Almacenes" EntitySet="Almacenes" />
-            <End Role="Articulos" EntitySet="Articulos" />
-          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -161,7 +125,6 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="almacen_id" ColumnName="almacen_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

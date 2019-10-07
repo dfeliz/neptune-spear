@@ -17,8 +17,5 @@ namespace Webapp.Models
         public int id { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
-        public int almacen_id { get; set; }
-    
-        public virtual Almacenes Almacenes { get; set; }
     }
 }
