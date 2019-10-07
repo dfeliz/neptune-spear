@@ -1,4 +1,4 @@
-﻿@model Webapp.Models.Articulos
+﻿@model Webapp.Models.Almacenes
 
 @{
     ViewBag.Title = "Details";
@@ -8,7 +8,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Articulos</h4>
+    <h4>Almacenes</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -20,11 +20,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.descripcion)
+            @Html.DisplayNameFor(model => model.direccion)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.descripcion)
+            @Html.DisplayFor(model => model.direccion)
         </dd>
 
     </dl>

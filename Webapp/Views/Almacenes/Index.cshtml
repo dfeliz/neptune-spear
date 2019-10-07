@@ -1,7 +1,8 @@
-﻿@model IEnumerable<Webapp.Models.Clientes>
+﻿@model IEnumerable<Webapp.Models.Almacenes>
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Index</h2>
@@ -15,18 +16,6 @@
             @Html.DisplayNameFor(model => model.nombre)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.apellido)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.telefono)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.identificacion)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.direccion)
         </th>
         <th></th>
@@ -36,18 +25,6 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.apellido)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.telefono)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.identificacion)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.direccion)

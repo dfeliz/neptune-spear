@@ -17,39 +17,39 @@ namespace API.Controllers
         private ProyectoPracticaLP2Entities db = new ProyectoPracticaLP2Entities();
 
         // GET: api/Clientes
-        public IQueryable<Cliente> GetClientes()
+        public IQueryable<Clientes> GetClientes()
         {
             return db.Clientes;
         }
 
         // GET: api/Clientes/5
-        [ResponseType(typeof(Cliente))]
+        [ResponseType(typeof(Clientes))]
         public IHttpActionResult GetCliente(int id)
         {
-            Cliente cliente = db.Clientes.Find(id);
-            if (cliente == null)
+            Clientes Clientes = db.Clientes.Find(id);
+            if (Clientes == null)
             {
                 return NotFound();
             }
 
-            return Ok(cliente);
+            return Ok(Clientes);
         }
 
         // PUT: api/Clientes/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCliente(int id, Cliente cliente)
+        public IHttpActionResult PutCliente(int id, Clientes Clientes)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != cliente.id)
+            if (id != Clientes.id)
             {
                 return BadRequest();
             }
 
-            db.Entry(cliente).State = EntityState.Modified;
+            db.Entry(Clientes).State = EntityState.Modified;
 
             try
             {
@@ -71,34 +71,34 @@ namespace API.Controllers
         }
 
         // POST: api/Clientes
-        [ResponseType(typeof(Cliente))]
-        public IHttpActionResult PostCliente(Cliente cliente)
+        [ResponseType(typeof(Clientes))]
+        public IHttpActionResult PostCliente(Clientes Clientes)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Clientes.Add(cliente);
+            db.Clientes.Add(Clientes);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = cliente.id }, cliente);
+            return CreatedAtRoute("DefaultApi", new { id = Clientes.id }, Clientes);
         }
 
         // DELETE: api/Clientes/5
-        [ResponseType(typeof(Cliente))]
+        [ResponseType(typeof(Clientes))]
         public IHttpActionResult DeleteCliente(int id)
         {
-            Cliente cliente = db.Clientes.Find(id);
-            if (cliente == null)
+            Clientes Clientes = db.Clientes.Find(id);
+            if (Clientes == null)
             {
                 return NotFound();
             }
 
-            db.Clientes.Remove(cliente);
+            db.Clientes.Remove(Clientes);
             db.SaveChanges();
 
-            return Ok(cliente);
+            return Ok(Clientes);
         }
 
         protected override void Dispose(bool disposing)

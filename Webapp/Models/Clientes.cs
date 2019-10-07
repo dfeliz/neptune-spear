@@ -12,7 +12,7 @@ namespace Webapp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Cliente
+    public partial class Clientes
     {
         public int id { get; set; }
         public string nombre { get; set; }
