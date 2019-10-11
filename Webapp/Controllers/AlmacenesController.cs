@@ -55,7 +55,7 @@ namespace Webapp.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:64099/api/Articulos/");
+                client.BaseAddress = new Uri("http://localhost:64099/api/Almacenes/");
 
                 HttpResponseMessage response = await client.PostAsJsonAsync("almacenes", almacen);
 
@@ -108,7 +108,7 @@ namespace Webapp.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri($"http://localhost:64099/api/articulos/{almacen.id}");
+                client.BaseAddress = new Uri($"http://localhost:64099/api/almacenes/{almacen.id}");
 
                 HttpResponseMessage response = await client.PutAsJsonAsync(client.BaseAddress, almacen);
 
