@@ -23,9 +23,9 @@ To start coding, first **you MUST create a branch.** I won't explain what a bran
 1. Run the following:
   ```bash
   cd neptune-spear
-  git checkout -b "my-name"
+  git checkout -b "feature-name"
   ``` 
-* Replace "my-name" with your name.
+* Replace "feature-name" with the feature's name (example: add-documentation).
 
 4. Open visual studio and do your job.
 
@@ -38,10 +38,10 @@ To upload your changes, do the following:
 ```bash
 git add *
 git commit -m "What did you do"
-git push --set-upstream origin "my-name"
+git push --set-upstream origin "feature-name"
 ```
 * "What did you do" is the commit message. Replace that with... eh... what did you do lol.
-* "my-name" is your branch's name. Remember git checkout -b "my-name"? Well, that name.
+* "my-name" is your branch's name. Remember git checkout -b "feature-name"? Well, that name.
 
 And that's all! Now all you have to do is come to this page **AGAIN** and you will see at the top a yellow container that says "You commited blabla changes" and a green button that says **"Compare & create pull request"**. Click that green button, then scroll down and press the another green button that says **"Create pull request"**.
 
